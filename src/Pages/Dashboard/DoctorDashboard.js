@@ -49,15 +49,7 @@ const DoctorDashboard = () => {
   return (
     <div className="dashboard-container">
       {/* Sidebar */}
-      <div className="sidebar">
-        <h2>🏥 HMS</h2>
-        <ul>
-          <li><Link to="/doctor-dashboard">Dashboard</Link></li>
-          <li><Link to="/doctor/viewAppointments">Appointments</Link></li>
-          <li><Link to="/doctor/profile">Profile</Link></li>
-        </ul>
-        <button onClick={handleLogout} className="logout-button">Logout</button>
-      </div>
+      
 
       {/* Main Content */}
       <div className="main-content">
@@ -74,17 +66,7 @@ const DoctorDashboard = () => {
           </form>
         </div>
 
-        {/* Available Time Slots Card */}
-        <div className="card">
-          <h3>📅 Available Time Slots</h3>
-          <ul>
-            {availableTimeSlots.length > 0 ? (
-              availableTimeSlots.map((slot, index) => <li key={index}>{slot}</li>)
-            ) : (
-              <p>No available time slots.</p>
-            )}
-          </ul>
-        </div>
+        
 
         {/* View Appointments Button */}
         <div className="card">

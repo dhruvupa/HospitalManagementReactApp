@@ -18,7 +18,7 @@ const AppointmentDetails = () => {
     // Function to handle accepting an appointment
     const handleAccept = async (appointmentId) => {
         try {
-            await api.post("/doctor/acceptAppointment", { appointmentId });
+            await api.post("/doctor/acceptAppointment", null, { params: { appointmentId } });
             setAppointments(prev => prev.map(appt => 
                 appt.id === appointmentId ? { ...appt, status: "Accepted" } : appt
             ));
@@ -30,7 +30,7 @@ const AppointmentDetails = () => {
     // Function to handle rejecting an appointment
     const handleReject = async (appointmentId) => {
         try {
-            await api.post("/doctor/rejectAppointment", { appointmentId });
+            await api.post("/doctor/rejectAppointment", null, { params: { appointmentId } });
             setAppointments(prev => prev.map(appt => 
                 appt.id === appointmentId ? { ...appt, status: "Rejected" } : appt
             ));
@@ -42,7 +42,7 @@ const AppointmentDetails = () => {
     // Function to mark appointment as completed
     const handleComplete = async (appointmentId) => {
         try {
-            await api.post("/doctor/completeAppointment", { appointmentId });
+            await api.post("/doctor/completeAppointment", null, { params: { appointmentId } });
             setAppointments(prev => prev.map(appt => 
                 appt.id === appointmentId ? { ...appt, status: "Completed" } : appt
             ));
@@ -113,7 +113,7 @@ const AppointmentDetails = () => {
                             </p>
 
                             {/* Actions based on status */}
-                            {appointment.status === "Scheduled" && (
+                            {appointment.status.toLowerCase() === "scheduled" && (
                                 <div className="action-buttons">
                                     <button 
                                         className="accept-btn" 
@@ -135,7 +135,7 @@ const AppointmentDetails = () => {
                                     </button>
                                 </div>
                             )}
-                            {appointment.status === "Accepted" && (
+                            {appointment.status.toLowerCase() === "accepted" && (
                                 <button 
                                     className="complete-btn" 
                                     onClick={(e) => {
