@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../api/axiosConfig"; // Axios instance
+import "./AppointmentDetails.css"; // Import CSS for styling
 
 const AppointmentDetails = () => {
     const [appointments, setAppointments] = useState([]);
@@ -61,12 +62,32 @@ const AppointmentDetails = () => {
 
             {/* Filter Buttons */}
             <div className="filter-buttons">
-                <button className={filter === "current" ? "active" : ""} onClick={() => setFilter("current")}>Current Bookings</button>
-                <button className={filter === "past" ? "active" : ""} onClick={() => setFilter("past")}>Past Bookings</button>
+                <button 
+                    className={filter === "current" ? "active" : ""} 
+                    onClick={() => setFilter("current")}
+                >
+                    Current Bookings
+                </button>
+                <button 
+                    className={filter === "past" ? "active" : ""} 
+                    onClick={() => setFilter("past")}
+                >
+                    Past Bookings
+                </button>
                 {filter === "past" && (
                     <>
-                        <button className={filter === "rejected" ? "active" : ""} onClick={() => setFilter("rejected")}>Rejected</button>
-                        <button className={filter === "completed" ? "active" : ""} onClick={() => setFilter("completed")}>Completed</button>
+                        <button 
+                            className={filter === "rejected" ? "active" : ""} 
+                            onClick={() => setFilter("rejected")}
+                        >
+                            Rejected
+                        </button>
+                        <button 
+                            className={filter === "completed" ? "active" : ""} 
+                            onClick={() => setFilter("completed")}
+                        >
+                            Completed
+                        </button>
                     </>
                 )}
             </div>
@@ -74,24 +95,56 @@ const AppointmentDetails = () => {
             {/* Appointment List */}
             <div className="appointments-list">
                 {appointments.length === 0 ? (
-                    <p>No appointments available.</p>
+                    <p className="no-appointments">No appointments available.</p>
                 ) : (
                     appointments.map((appointment) => (
-                        <div key={appointment.id} className={`appointment-card ${appointment.status.toLowerCase()}`} onClick={() => handleAppointmentClick(appointment.id)}>
+                        <div 
+                            key={appointment.id} 
+                            className={`appointment-card ${appointment.status.toLowerCase()}`}
+                            onClick={() => handleAppointmentClick(appointment.id)}
+                        >
                             <p><strong>Patient:</strong> {appointment.patientName}</p>
                             <p><strong>Doctor:</strong> {appointment.doctorName}</p>
                             <p><strong>Date & Time:</strong> {appointment.appointmentDate}</p>
-                            <p><strong>Status:</strong> {appointment.status}</p>
+                            <p><strong>Status:</strong> 
+                                <span className={`status-badge ${appointment.status.toLowerCase()}`}>
+                                    {appointment.status}
+                                </span>
+                            </p>
 
                             {/* Actions based on status */}
                             {appointment.status === "Scheduled" && (
-                                <div>
-                                    <button className="accept-btn" onClick={() => handleAccept(appointment.id)}>Accept</button>
-                                    <button className="reject-btn" onClick={() => handleReject(appointment.id)}>Reject</button>
+                                <div className="action-buttons">
+                                    <button 
+                                        className="accept-btn" 
+                                        onClick={(e) => {
+                                            e.stopPropagation(); // Prevent card click
+                                            handleAccept(appointment.id);
+                                        }}
+                                    >
+                                        Accept
+                                    </button>
+                                    <button 
+                                        className="reject-btn" 
+                                        onClick={(e) => {
+                                            e.stopPropagation(); // Prevent card click
+                                            handleReject(appointment.id);
+                                        }}
+                                    >
+                                        Reject
+                                    </button>
                                 </div>
                             )}
                             {appointment.status === "Accepted" && (
-                                <button className="complete-btn" onClick={() => handleComplete(appointment.id)}>Mark as Completed</button>
+                                <button 
+                                    className="complete-btn" 
+                                    onClick={(e) => {
+                                        e.stopPropagation(); // Prevent card click
+                                        handleComplete(appointment.id);
+                                    }}
+                                >
+                                    Mark as Completed
+                                </button>
                             )}
                         </div>
                     ))

@@ -13,32 +13,41 @@ const Login = () => {
     e.preventDefault();
 
     const loginData = {
-        firstName: username.split(" ")[0],  // Assuming input is "John Doe"
-        lastName: username.split(" ")[1] || "", // Handle single-word names
+      firstName: username.split(" ")[0], // Assuming input is "John Doe"
+      lastName: username.split(" ")[1] || "", // Handle single-word names
     };
 
     try {
-        const response = await fetch(`http://localhost:8080/${role}/loginSuccess`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(loginData),
-        });
+      const response = await fetch(`http://localhost:8080/${role}/loginSuccess`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(loginData),
+      });
 
-        const data = await response.json();
-        
-        if (response.ok) {
-            alert(data.message);
-            localStorage.setItem("doctor", JSON.stringify(data.doctor)); // Store doctor data
-            navigate(`/${role}-dashboard`);
-        } else {
-            alert(data.message);
+      const data = await response.json();
+
+      if (response.ok) {
+        alert(data.message);
+
+        // Store user data in localStorage based on role
+        if (role === "doctor") {
+          localStorage.setItem("loggedInUser", JSON.stringify(data.doctor));
+        } else if (role === "patient") {
+          localStorage.setItem("loggedInUser", JSON.stringify(data.patient));
+        } else if (role === "nurse") {
+          localStorage.setItem("loggedInUser", JSON.stringify(data.nurse));
         }
-    } catch (error) {
-        console.error("Login failed:", error);
-        alert("An error occurred. Please try again.");
-    }
-};
 
+        // Navigate to the respective dashboard
+        navigate(`/${role}-dashboard`);
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      console.error("Login failed:", error);
+      alert("An error occurred. Please try again.");
+    }
+  };
 
   return (
     <div className="login-container">

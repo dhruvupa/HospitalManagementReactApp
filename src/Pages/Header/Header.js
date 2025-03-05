@@ -1,10 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./Header.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const Header = () => {
-  const loggedInUser = "John Doe"; // This will be dynamic later (from DB)
+  const [loggedInUser, setLoggedInUser] = useState("");
+
+  // Retrieve logged-in user from localStorage
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("loggedInUser"));
+    if (user) {
+      setLoggedInUser(`${user.firstName} ${user.lastName}`);
+    }
+  }, []);
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -30,31 +38,12 @@ const Header = () => {
         {/* Navbar Links */}
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto">
-            <li className="nav-item">
-              <Link className="nav-link" to="/">
-                Home
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/appointments">
-                Appointments
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/doctors">
-                Doctors
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/contact">
-                Contact Us
-              </Link>
-            </li>
+             
           </ul>
 
           {/* Logged-in User */}
           <span className="navbar-text ms-3">
-            👤 Welcome, <strong>{loggedInUser}</strong>
+            👤 Welcome, <strong>{loggedInUser || "Guest"}</strong>
           </span>
         </div>
       </div>

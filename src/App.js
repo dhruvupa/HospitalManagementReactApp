@@ -10,8 +10,9 @@ import Login from './Pages/Login/Login';
 import Register from './Pages/Register/Register';
 import DoctorDashboard from "./Pages/Dashboard/DoctorDashboard";
 import AppointmentDetails from "./Pages/Appintments/AppointmentDetails";
+import PatientDashboard from "./Pages/Dashboard/PatientDashboard";
 // Dummy dashboards
-const PatientDashboard = () => <h2>🏥 Patient Dashboard</h2>;
+//const PatientDashboard = () => <h2>🏥 Patient Dashboard</h2>;
 //const DoctorDashboard = () => <h2>🩺 Doctor Dashboard</h2>;
 const NurseDashboard = () => <h2>💉 Nurse Dashboard</h2>;
 
