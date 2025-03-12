@@ -11,6 +11,7 @@ import Register from './Pages/Register/Register';
 import DoctorDashboard from "./Pages/Dashboard/DoctorDashboard";
 import AppointmentDetails from "./Pages/Appintments/AppointmentDetails";
 import PatientDashboard from "./Pages/Dashboard/PatientDashboard";
+import PatientAppointment from './Pages/Appintments/PatientAppointment';
 // Dummy dashboards
 //const PatientDashboard = () => <h2>🏥 Patient Dashboard</h2>;
 //const DoctorDashboard = () => <h2>🩺 Doctor Dashboard</h2>;
@@ -25,6 +26,7 @@ function App() {
     <Route path="/doctor-dashboard" element={<><Header /><DoctorDashboard /></>} />
     <Route path="/nurse-dashboard" element={<><Header /><NurseDashboard /></>} />
     <Route path="/doctor/viewAppointments" element={<AppointmentDetails />} />
+    <Route path="/patient/viewAppointments" element={<PatientAppointment />} />
 
   </Routes>
   );

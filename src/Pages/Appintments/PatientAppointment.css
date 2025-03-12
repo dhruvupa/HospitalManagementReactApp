@@ -1,0 +1,129 @@
+.view-appointments-container {
+    padding: 20px;
+}
+
+.appointments-list {
+    margin-top: 20px;
+}
+
+.appointment-card {
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.action-buttons {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center; /* Aligns buttons horizontally */
+    gap: 10px; /* Space between buttons */
+}
+
+.action-buttons button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.action-buttons button:first-child {
+    background-color: #007bff;
+    color: white;
+}
+
+.action-buttons button:last-child {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* Modal Styles */
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 25px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 90%;
+    max-width: 400px;
+    border-radius: 10px;
+}
+
+/* Time Slots Section */
+.time-slot-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.time-slot {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px;
+}
+
+.time-slot button {
+    min-width: 100px;
+    padding: 10px 15px;
+    border: 1px solid #007bff;
+    background: white;
+    color: #007bff;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+    text-align: center;
+}
+
+.time-slot button:hover,
+.time-slot button.selected {
+    background: #007bff;
+    color: white;
+}
+
+/* Modal Buttons (Reschedule & Cancel) */
+.modal-buttons {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    padding: 10px;
+}
+
+.modal-buttons button {
+    flex: 1;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    max-width: 120px;
+}
+
+.modal-buttons button:first-child {
+    background-color: #007bff;
+    color: white;
+}
+
+.modal-buttons button:last-child {
+    background-color: #dc3545;
+    color: white;
+}
+
+.error-message {
+    color: red;
+    margin-top: 10px;
+}
