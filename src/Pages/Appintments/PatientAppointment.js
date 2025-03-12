@@ -77,23 +77,23 @@ const PatientAppointment = () => {
             setErrorMessage("Please select a time slot.");
             return;
         }
-
+    
         try {
-            await axios.post(
+            const response = await axios.post(
                 `http://localhost:8080/patient/rescheduleAppointment?appointmentId=${selectedAppointment.id}&newTimeSlot=${selectedSlot}`,
-                {}, // Empty body
+                {},
                 { withCredentials: true }
             );
-
-            // Update appointment list with new time slot
+    
+            const updatedAppointment = response.data.updatedAppointment;
+    
+            // Update appointment list with full details from the backend
             setAppointments(prev =>
                 prev.map(appt =>
-                    appt.id === selectedAppointment.id
-                        ? { ...appt, status: "Rescheduled", appointmentDate: selectedSlot }
-                        : appt
+                    appt.id === updatedAppointment.id ? updatedAppointment : appt
                 )
             );
-
+    
             alert("Appointment rescheduled successfully!");
             setSelectedAppointment(null);
             setSelectedSlot(""); // Reset selection
@@ -102,6 +102,7 @@ const PatientAppointment = () => {
             setErrorMessage("Failed to reschedule appointment. Please try again.");
         }
     };
+    
 
     return (
         <div className="view-appointments-container">
