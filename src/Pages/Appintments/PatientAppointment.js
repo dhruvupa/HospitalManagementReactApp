@@ -26,16 +26,13 @@ const PatientAppointment = () => {
         fetchAppointments();
     }, [navigate]);
 
-    // Fetch time slots for rescheduling (excluding the current slot)
+    // Fetch available time slots for rescheduling
     const fetchTimeSlots = async (doctorId, currentSlot) => {
         if (!doctorId) return;
 
         try {
             const response = await axios.get(`http://localhost:8080/patient/getTimeSlots?doctorId=${doctorId}`, { withCredentials: true });
-
-            // Ensure the date formats match before filtering
             const filteredSlots = response.data.filter(slot => slot !== currentSlot);
-            console.log("Fetched Time Slots:", filteredSlots); // Debugging
             setTimeSlots(filteredSlots);
         } catch (error) {
             console.error("Error fetching time slots:", error);
@@ -43,25 +40,23 @@ const PatientAppointment = () => {
         }
     };
 
-    // Handle appointment selection for rescheduling
+    // Handle selecting an appointment for rescheduling
     const handleSelectAppointment = (appointment) => {
-        console.log("Selected Appointment:", appointment); // Debugging
         setSelectedAppointment(appointment);
-        // Fetch time slots excluding the current appointment's slot
         fetchTimeSlots(appointment.doctorId, appointment.appointmentDate);
     };
 
-    // Handle time slot selection for rescheduling
+    // Handle selecting a new time slot
     const handleSlotSelection = (slot) => {
         setSelectedSlot(slot);
         setErrorMessage("");
     };
 
-    // Handle cancel appointment
+    // Cancel an appointment
     const handleCancelAppointment = async (appointmentId) => {
         try {
             await axios.post(`http://localhost:8080/patient/cancelAppointment?appointmentId=${appointmentId}`, {}, { withCredentials: true });
-            setAppointments(prev => prev.map(appt => 
+            setAppointments(prev => prev.map(appt =>
                 appt.id === appointmentId ? { ...appt, status: "Cancelled" } : appt
             ));
             alert("Appointment cancelled successfully!");
@@ -71,38 +66,35 @@ const PatientAppointment = () => {
         }
     };
 
-    // Handle reschedule appointment
+    // Reschedule an appointment
     const handleRescheduleAppointment = async () => {
         if (!selectedAppointment || !selectedSlot) {
             setErrorMessage("Please select a time slot.");
             return;
         }
-    
+
         try {
             const response = await axios.post(
                 `http://localhost:8080/patient/rescheduleAppointment?appointmentId=${selectedAppointment.id}&newTimeSlot=${selectedSlot}`,
                 {},
                 { withCredentials: true }
             );
-    
+
             const updatedAppointment = response.data.updatedAppointment;
-    
-            // Update appointment list with full details from the backend
+
+            // Update the appointment list with new details from the backend
             setAppointments(prev =>
-                prev.map(appt =>
-                    appt.id === updatedAppointment.id ? updatedAppointment : appt
-                )
+                prev.map(appt => (appt.id === updatedAppointment.id ? updatedAppointment : appt))
             );
-    
+
             alert("Appointment rescheduled successfully!");
             setSelectedAppointment(null);
-            setSelectedSlot(""); // Reset selection
+            setSelectedSlot("");
         } catch (error) {
             console.error("Error rescheduling appointment:", error);
             setErrorMessage("Failed to reschedule appointment. Please try again.");
         }
     };
-    
 
     return (
         <div className="view-appointments-container">
@@ -119,6 +111,12 @@ const PatientAppointment = () => {
                                 <p><strong>Doctor:</strong> {appointment.doctorName}</p>
                                 <p><strong>Date & Time:</strong> {appointment.appointmentDate}</p>
                                 <p><strong>Status:</strong> {appointment.status}</p>
+                                
+                                {/* Show doctor notes if available */}
+                                {appointment.doctorNotes && (
+                                    <p><strong>Doctor Notes:</strong> {appointment.doctorNotes}</p>
+                                )}
+
                                 {appointment.status.toLowerCase() === "scheduled" && (
                                     <div className="action-buttons">
                                         <button onClick={() => handleSelectAppointment(appointment)}>Reschedule</button>

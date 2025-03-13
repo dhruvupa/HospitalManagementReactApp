@@ -16,11 +16,10 @@ const AppointmentDetails = () => {
             .then(response => setAppointments(response.data))
             .catch(error => console.error("Error fetching appointments:", error));
 
-        // Fetch nurses (Similar to how doctors are fetched in PatientDashboard)
         api.get("/nurses/nurse")
             .then(response => {
                 setNurses(response.data);
-                console.log("Nurses data:", response.data); // Add this line
+                console.log("Nurses data:", response.data);
             })
             .catch(error => console.error("Error fetching nurses:", error));
     }, [filter]);
@@ -62,45 +61,38 @@ const AppointmentDetails = () => {
     };
 
     // Function to handle assigning a nurse and adding a comment
-    const handleAssignNurseAndComment = async (patientId) => {
-        const assignment = assignments[patientId];
-    
+    const handleAssignNurseAndComment = async (appointment) => {
+        const assignment = assignments[appointment.id]; 
+
         if (!assignment?.nurseId || !assignment?.comment) {
             alert("Please select a nurse and enter a comment.");
             return;
         }
-    
-        // Convert nurseId to a number before sending
+
         const requestData = {
-            patientId: Number(patientId),  // Use patientId instead of appointmentId
-            nurseId: Number(assignment.nurseId), // Ensure it's a number
+            patientId: Number(appointment.patientId),  
+            nurseId: Number(assignment.nurseId),
             comment: assignment.comment
         };
-    
+
         console.log("Sending Request Payload:", requestData);
-    
+
         try {
             const response = await api.post("/doctor/assignNurseAndComment", requestData);
             console.log("Response:", response.data);
-    
+
             setAssignments(prev => {
                 const newState = { ...prev };
-                delete newState[patientId];
+                delete newState[appointment.id]; 
                 return newState;
             });
-    
+
             alert("Nurse assigned and comment saved successfully!");
         } catch (error) {
             console.error("Error assigning nurse and saving comment:", error.response?.data || error);
             alert("Failed to assign nurse and save comment.");
         }
     };
-    
-    
-    
-    
-    
-
 
     return (
         <div className="appointments-container">
@@ -160,22 +152,10 @@ const AppointmentDetails = () => {
                             {/* Actions based on status */}
                             {appointment.status.toLowerCase() === "scheduled" && (
                                 <div className="action-buttons">
-                                    <button
-                                        className="accept-btn"
-                                        onClick={(e) => {
-                                            e.stopPropagation(); // Prevent card click
-                                            handleAccept(appointment.id);
-                                        }}
-                                    >
+                                    <button className="accept-btn" onClick={() => handleAccept(appointment.id)}>
                                         Accept
                                     </button>
-                                    <button
-                                        className="reject-btn"
-                                        onClick={(e) => {
-                                            e.stopPropagation(); // Prevent card click
-                                            handleReject(appointment.id);
-                                        }}
-                                    >
+                                    <button className="reject-btn" onClick={() => handleReject(appointment.id)}>
                                         Reject
                                     </button>
                                 </div>
@@ -187,54 +167,43 @@ const AppointmentDetails = () => {
                                     <select
                                         value={assignments[appointment.id]?.nurseId || ''}
                                         onChange={(e) => {
-                                            const nurseId = e.target.value;
-                                            setAssignments(prev => ({                                             
-                                                ...prev,[appointment.id]: {
-                                                ...prev[appointment.id],
-                                                    nurseId
+                                            setAssignments(prev => ({
+                                                ...prev,
+                                                [appointment.id]: { 
+                                                    ...prev[appointment.id],
+                                                    nurseId: e.target.value 
                                                 }
                                             }));
-                                            e.stopPropagation();  
                                         }}
                                     >
                                         <option value="">Select a Nurse</option>
-                                        {nurses.length > 0 && nurses.map(nurse => (
+                                        {nurses.map(nurse => (
                                             <option key={nurse.id} value={nurse.id}>
                                                 {nurse.firstName} {nurse.lastName}
                                             </option>
                                         ))}
                                     </select>
 
-
                                     <textarea
                                         placeholder="Enter comment..."
                                         value={assignments[appointment.id]?.comment || ''}
                                         onChange={(e) => setAssignments(prev => ({
                                             ...prev,
-                                            [appointment.id]: { ...prev[appointment.id], comment: e.target.value }
+                                            [appointment.id]: { 
+                                                ...prev[appointment.id],
+                                                comment: e.target.value 
+                                            }
                                         }))}
-
                                     />
-                                    <button
-                                        className="assign-btn"
-                                        onClick={(e) => {
-                                            e.stopPropagation(); // Prevent card click
-                                            handleAssignNurseAndComment(appointment.id);
-                                        }}
-                                    >
+
+                                    <button className="assign-btn" onClick={() => handleAssignNurseAndComment(appointment)}>
                                         Assign Nurse & Save Comment
                                     </button>
                                 </div>
                             )}
 
                             {appointment.status.toLowerCase() === "accepted" && (
-                                <button
-                                    className="complete-btn"
-                                    onClick={(e) => {
-                                        e.stopPropagation(); // Prevent card click
-                                        handleComplete(appointment.id);
-                                    }}
-                                >
+                                <button className="complete-btn" onClick={() => handleComplete(appointment.id)}>
                                     Mark as Completed
                                 </button>
                             )}
