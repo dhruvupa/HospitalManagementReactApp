@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 import api from "../../api/axiosConfig"; // Axios instance
 import "./AppointmentDetails.css"; // Import CSS for styling
 
@@ -8,7 +8,7 @@ const AppointmentDetails = () => {
     const [nurses, setNurses] = useState([]); // State to store nurses
     const [assignments, setAssignments] = useState({}); // State to manage nurse assignment and comments
     const [filter, setFilter] = useState("current"); // Default to "current" bookings
-    const navigate = useNavigate();
+    //const navigate = useNavigate();
 
     // Fetch appointments and nurses based on filter
     useEffect(() => {
@@ -16,7 +16,7 @@ const AppointmentDetails = () => {
             .then(response => setAppointments(response.data))
             .catch(error => console.error("Error fetching appointments:", error));
 
-        api.get("/nurses/nurse")
+        api.get("/nurse/nurses")
             .then(response => {
                 setNurses(response.data);
                 console.log("Nurses data:", response.data);

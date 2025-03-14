@@ -1,0 +1,99 @@
+/* Main Container */
+.dashboard-container1 {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+}
+
+/* Header */
+.dashboard-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.dashboard-title {
+    font-size: 26px;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.welcome-text {
+    font-size: 18px;
+    color: #555;
+}
+
+/* Task Card */
+.card {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    text-align: left;
+    box-sizing: border-box;
+}
+
+/* Task List */
+.task-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.task-item {
+    background: #f0f0f0;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    border-left: 5px solid #007bff;
+    box-sizing: border-box;
+}
+
+.task-item p {
+    margin: 5px 0;
+}
+
+/* No Tasks Message */
+.no-task-text {
+    color: #888;
+    font-size: 16px;
+    text-align: center;
+}
+
+/* Logout Button */
+.logout-container {
+    display: flex;
+    justify-content: flex-end; /* Aligns the button to the right */
+    margin-top: 20px;
+}
+
+.logout-btn {
+    padding: 10px 20px;
+    background-color: #dc3545;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+    width: 200px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.logout-btn:hover {
+    background-color: #c82333;
+}
+
+/* Loading Text */
+.loading-text {
+    font-size: 18px;
+    color: #007bff;
+    text-align: center;
+}

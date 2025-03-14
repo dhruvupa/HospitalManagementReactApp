@@ -12,10 +12,8 @@ import DoctorDashboard from "./Pages/Dashboard/DoctorDashboard";
 import AppointmentDetails from "./Pages/Appintments/AppointmentDetails";
 import PatientDashboard from "./Pages/Dashboard/PatientDashboard";
 import PatientAppointment from './Pages/Appintments/PatientAppointment';
-// Dummy dashboards
-//const PatientDashboard = () => <h2>🏥 Patient Dashboard</h2>;
-//const DoctorDashboard = () => <h2>🩺 Doctor Dashboard</h2>;
-const NurseDashboard = () => <h2>💉 Nurse Dashboard</h2>;
+import NurseDashboard from './Pages/Dashboard/NurseDashboard';
+
 
 function App() {
   return (

@@ -27,7 +27,6 @@ const Login = () => {
       const data = await response.json();
 
       if (response.ok) {
-        alert(data.message);
 
         // Store user data in localStorage based on role
         if (role === "doctor") {
