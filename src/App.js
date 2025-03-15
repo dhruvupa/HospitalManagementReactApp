@@ -13,6 +13,7 @@ import AppointmentDetails from "./Pages/Appintments/AppointmentDetails";
 import PatientDashboard from "./Pages/Dashboard/PatientDashboard";
 import PatientAppointment from './Pages/Appintments/PatientAppointment';
 import NurseDashboard from './Pages/Dashboard/NurseDashboard';
+import AdminDashboard from './Pages/Dashboard/AdminDashboard';
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
     <Route path="/patient-dashboard" element={<><Header /><PatientDashboard /></>} />
     <Route path="/doctor-dashboard" element={<><Header /><DoctorDashboard /></>} />
     <Route path="/nurse-dashboard" element={<><Header /><NurseDashboard /></>} />
+    <Route path="/admin-dashboard" element={<><Header /><AdminDashboard /></>} />
     <Route path="/doctor/viewAppointments" element={<AppointmentDetails />} />
     <Route path="/patient/viewAppointments" element={<PatientAppointment />} />
 

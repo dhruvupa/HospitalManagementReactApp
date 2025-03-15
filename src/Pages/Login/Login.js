@@ -27,14 +27,15 @@ const Login = () => {
       const data = await response.json();
 
       if (response.ok) {
-
-        // Store user data in localStorage based on role
+        // Store user data based on role
         if (role === "doctor") {
           localStorage.setItem("loggedInUser", JSON.stringify(data.doctor));
         } else if (role === "patient") {
           localStorage.setItem("loggedInUser", JSON.stringify(data.patient));
         } else if (role === "nurse") {
           localStorage.setItem("loggedInUser", JSON.stringify(data.nurse));
+        } else if (role === "admin") {
+          localStorage.setItem("loggedInUser", JSON.stringify(data.admin));
         }
 
         // Navigate to the respective dashboard
@@ -64,6 +65,7 @@ const Login = () => {
               <option value="patient">Patient</option>
               <option value="doctor">Doctor</option>
               <option value="nurse">Nurse</option>
+              <option value="admin">Admin</option> {/* Added Admin */}
             </select>
           </div>
 
