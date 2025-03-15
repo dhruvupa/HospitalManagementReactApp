@@ -25,7 +25,7 @@ const Register = () => {
         };
 
         try {
-            const response = await axios.post('http://localhost:8080/Patient/patient/registerSuccess', patientData);
+            const response = await axios.post('http://localhost:8080/patient/registerSuccess', patientData);
             if (response.status === 200) {
                 alert("Registration Successful!");
                 navigate('/');
